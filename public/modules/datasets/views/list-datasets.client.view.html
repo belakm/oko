@@ -1,18 +1,6 @@
-<section data-ng-controller="HomeController">
-	<div class="jumbotron">
-	  <div class="container">
-	    <h1>OKO</h1>
-	    <p>...</p>
-	  </div>
-	</div>
-</section>
 <section data-ng-controller="DatasetsController" data-ng-init="find()">
     <div class="page-header">
-        <h2>Datasets</h2>
-	    <button ng-click="parse()" class="btn-success">PARSE DATA</button>
-	    <div class="row">
-	    	<div ng-if="parser.Response==='True'" ng-bind="parser">yo</div>
-	    </div>
+        <h1>Datasets</h1>
     </div>
     <div class="list-group">
         <a data-ng-repeat="dataset in datasets" data-ng-href="#!/datasets/{{dataset._id}}" class="list-group-item">
