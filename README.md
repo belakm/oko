@@ -1,2 +1,2 @@
 # oko
-Parser for XML from web source.
+Parser for XML from a web source.
