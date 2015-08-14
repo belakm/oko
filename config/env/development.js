@@ -6,9 +6,9 @@ module.exports = {
 		title: 'Oko - Development Environment'
 	},
 	facebook: {
-		clientID: process.env.FACEBOOK_ID || 'APP_ID',
-		clientSecret: process.env.FACEBOOK_SECRET || 'APP_SECRET',
-		callbackURL: '/auth/facebook/callback'
+		clientID: process.env.FACEBOOK_ID || '1639644579637566',
+		clientSecret: process.env.FACEBOOK_SECRET || 'd00a2109b81fc58c8b89d6b4dc0dc79a',
+		callbackURL: 'http://localhost:3000/auth/facebook/callback',
 	},
 	twitter: {
 		clientID: process.env.TWITTER_KEY || 'CONSUMER_KEY',
