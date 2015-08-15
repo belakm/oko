@@ -8,6 +8,8 @@ var mongoose = require('mongoose'),
 	Dataset = mongoose.model('Dataset'),
 	_ = require('lodash');
 
+var request = require('request');
+
 /**
  * Create a Dataset
  */
@@ -32,6 +34,7 @@ exports.create = function(req, res) {
 exports.read = function(req, res) {
 	res.jsonp(req.dataset);
 };
+
 
 /**
  * Update a Dataset
@@ -81,6 +84,22 @@ exports.list = function(req, res) {
 		} else {
 			res.jsonp(datasets);
 		}
+	});
+};
+
+/**
+ * Read XML from web
+ */
+exports.readXML = function(req, res) { 
+	var parseString = require('xml2js').parseString;
+
+	var request = require('request');
+	request('http://www.arso.gov.si/xml/vode/hidro_podatki_zadnji.xml', function (error, response, body) {
+	  if (!error && response.statusCode === 200) {
+		    parseString(body, function (err, result) {
+		    console.dir(JSON.stringify(result));
+		});
+	  }
 	});
 };
 

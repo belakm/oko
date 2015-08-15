@@ -9,6 +9,10 @@ module.exports = function(app) {
 		.get(datasets.list)
 		.post(users.requiresLogin, datasets.create);
 
+	// Parse Routes
+	app.route('/datasets/xml')
+		.get(datasets.readXML);
+
 	app.route('/datasets/:datasetId')
 		.get(datasets.read)
 		.put(users.requiresLogin, datasets.hasAuthorization, datasets.update)

@@ -5,7 +5,7 @@ angular.module('datasets').controller('DatasetsController', ['$scope', '$statePa
 	function($scope, $stateParams, $location, Authentication, Datasets, $http) {
 		$scope.authentication = Authentication;
 
-		var parser='';
+		//var parser='';
 
 		// Create new Dataset
 		$scope.create = function() {
@@ -25,7 +25,7 @@ angular.module('datasets').controller('DatasetsController', ['$scope', '$statePa
 			});
 		};
 
-		$scope.parse = function() {
+		/*$scope.parse = function() {
 			console.log('yo');
 			$http.get('http://www.arso.gov.si/xml/vode/hidro_podatki_zadnji.xml').
 			  then(function(response) {
@@ -35,7 +35,7 @@ angular.module('datasets').controller('DatasetsController', ['$scope', '$statePa
 			    $scope.parser = err;
 				console.log(response);
  			 });   // Your code...y
-		};
+		};*/
 
 		// Remove existing Dataset
 		$scope.remove = function(dataset) {
