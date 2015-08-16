@@ -9,6 +9,7 @@ var mongoose = require('mongoose'),
 	_ = require('lodash');
 
 var request = require('request');
+var chalk = require('chalk');
 
 /**
  * Create a Dataset
@@ -90,18 +91,47 @@ exports.list = function(req, res) {
 /**
  * Read XML from web
  */
-exports.readXML = function(req, res) { 
-	var parseString = require('xml2js').parseString;
 
-	var request = require('request');
+function onInsert(err, docs) {
+    if (err) {
+        console.log(chalk.red('Error inserting into database.' + err));
+    } else {
+        console.info('%d Objects were successfully stored.', docs.length);
+    }
+}
+
+
+exports.readXML = function(req, res) { 
+	var parserString = require('xml2js').Parser({mergeAttrs :'true', explicitArray : false});
+
 	request('http://www.arso.gov.si/xml/vode/hidro_podatki_zadnji.xml', function (error, response, body) {
 	  if (!error && response.statusCode === 200) {
-		    parseString(body, function (err, result) {
-		    console.dir(JSON.stringify(result));
+		    parserString.parseString(body, function (err, result) {
+
+		    //console.dir(JSON.stringify(result));
+		    if (err) {
+		    	console.log(chalk.yellow('Parse error.'));
+		    } else {
+		    	var dataset = new Dataset(result);
+				dataset.user = req.user;
+
+				//console.log(result.arsopodatki.postaja);
+
+				Dataset.collection.insert(result.arsopodatki.postaja, onInsert);
+
+				/*dataset.save(function(err) {
+					if (err) {
+						console.log(chalk.red('Error inserting into database.'));
+					} else {
+						console.log(chalk.green('Inserted ' + Object.keys(result).length + ' keys into database.'));
+					}
+				});*/
+		    }
 		});
 	  }
 	});
 };
+
 
 /**
  * Dataset middleware

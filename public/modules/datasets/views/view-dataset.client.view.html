@@ -1,6 +1,9 @@
 <section data-ng-controller="DatasetsController" data-ng-init="findOne()">
 	<div class="page-header">
 		<h1 data-ng-bind="dataset.name"></h1>
+		<ul class="list-group" ng-repeat="(key, value) in dataset">
+		  <li class="list-group-item">{{key}}: <strong>{{value}}</strong></li>
+		</ul>
 	</div>
 	<div class="pull-right" data-ng-show="((authentication.user) && (authentication.user._id == dataset.user._id))">
 		<a class="btn btn-primary" href="/#!/datasets/{{dataset._id}}/edit">
