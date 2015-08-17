@@ -15,6 +15,7 @@ module.exports = {
 			css: [
 				'public/lib/bootstrap/dist/css/bootstrap.css',
 				'public/lib/bootstrap/dist/css/bootstrap-theme.css',
+				'public/lib/nvd3/nv.d3.css'
 			],
 			js: [
 				'public/lib/angular/angular.js',
@@ -26,9 +27,12 @@ module.exports = {
 				'public/lib/angular-ui-router/release/angular-ui-router.js',
 				'public/lib/angular-ui-utils/ui-utils.js',
 				'public/lib/angular-bootstrap/ui-bootstrap-tpls.js',
-				'//maps.googleapis.com/maps/api/js?sensor=false',
+				'//maps.googleapis.com/maps/api/js?sensor=false?v3',
 	            'public/lib/lodash/lodash.min.js',
-	            'public/lib/angular-google-maps/dist/angular-google-maps.js'
+	            'public/lib/angular-google-maps/dist/angular-google-maps.js',
+	            'public/lib/d3/d3.js',
+	            'public/lib/nvd3/nv.d3.min.js',
+	            'public/lib/angular-nvd3/dist/angular-nvd3.min.js'
 			]
 		},
 		css: [

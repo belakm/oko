@@ -11,6 +11,7 @@ var mongoose = require('mongoose'),
 var request = require('request');
 var chalk = require('chalk');
 var async = require('async');
+var d3 = require('d3');
 
 /**
  * Create a Dataset
