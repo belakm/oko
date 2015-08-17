@@ -13,6 +13,10 @@ module.exports = function(app) {
 	app.route('/datasets/xml')
 		.get(datasets.readXML);
 
+
+	app.route('/datasets/latest')
+		.get(datasets.getLatest);
+
 	app.route('/datasets/:datasetId')
 		.get(datasets.read)
 		.put(users.requiresLogin, datasets.hasAuthorization, datasets.update)

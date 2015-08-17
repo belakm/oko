@@ -8,22 +8,22 @@ var mongoose = require('mongoose'),
 
 /**
  * Dataset Schema
+
+sifra
+ge_dolzina
+ge_sirina
+kota_0
+reka
+merilno_mesto
+ime_kratko
+datum
+vodostaj
+pretok
+pretok_znacilni
+temp_vode
+
  */
 var DatasetSchema = new Schema({
-	name: {
-		type: String,
-		default: '',
-		required: 'Please fill Dataset name',
-		trim: true
-	},
-	created: {
-		type: Date,
-		default: Date.now
-	},
-	user: {
-		type: Schema.ObjectId,
-		ref: 'User'
-	},
 	sifra: {
 		type: 'String',
 		default: '',
@@ -60,9 +60,8 @@ var DatasetSchema = new Schema({
 		trim: true
 	},
 	datum: {
-		type: 'String',
-		default: '',
-		trim: true
+		type: 'Date',
+		default: Date.now
 	},
 	vodostaj: {
 		type: 'String',
@@ -83,10 +82,6 @@ var DatasetSchema = new Schema({
 		type: 'String',
 		default: '',
 		trim: true
-	},
-	date: {
-		type: 'Date',
-		default: Date.now
 	}
 });
 

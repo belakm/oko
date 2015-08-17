@@ -6,26 +6,36 @@
 	  </div>
 	</div>
 </section>
-<section data-ng-controller="DatasetsController" data-ng-init="find()">
+
+<section ng-app="myapp" data-ng-controller="StationsController" data-ng-init="find()">
     <div class="page-header">
-        <h2>Datasets</h2>
-	    <button ng-click="parse()" class="btn-success">PARSE DATA</button>
-	    <div class="row">
-	    	<div>{{parser}}</div>
-	    </div>
+        <h1>Stations</h1>
     </div>
     <div class="list-group">
-        <a data-ng-repeat="dataset in datasets" data-ng-href="#!/datasets/{{dataset._id}}" class="list-group-item">
+        <div data-ng-repeat="station in stations" class="list-group-item col-sm-6">
 			<small class="list-group-item-text">
 				Posted on
-				<span data-ng-bind="dataset.created | date:'medium'"></span>
+				<span data-ng-bind="station.created | date:'medium'"></span>
 				by
-				<span data-ng-bind="dataset.user.displayName"></span>
+				<span data-ng-bind="station.user.displayName"></span>
 			</small>
-			<h4 class="list-group-item-heading" data-ng-bind="dataset.name"></h4>
-        </a>
+			<h4 class="list-group-item-heading" data-ng-bind="station.name"></h4>
+			<div class="row">
+				<div class="col-sm-12">Sets: {{station.info.length}}</div>
+				<div class="col-sm-12">
+					<ion-view view-title="Google Maps V3 example">      
+					    <ion-content data-tap-disabled="true">
+					        <ui-gmap-google-map center='map.center' zoom='map.zoom'></ui-gmap-google-map>
+					    </ion-content>
+					</ion-view>
+				</div>
+				<div class="col-sm-12">
+					<a class="btn btn-success btn-block" data-ng-href="#!/stations/{{station._id}}">See more</a>
+				</div>
+			</div>
+        </div>
     </div>
-    <div class="alert alert-warning text-center" data-ng-hide="!datasets.$resolved || datasets.length">
-    	No Datasets yet, why don't you <a href="/#!/datasets/create">create one</a>?
+    <div class="alert alert-warning text-center" data-ng-hide="!stations.$resolved || stations.length">
+    	No Stations yet, why don't you <a href="/#!/stations/create">create one</a>?
     </div>
 </section>

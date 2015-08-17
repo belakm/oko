@@ -10,6 +10,7 @@ var mongoose = require('mongoose'),
 
 var request = require('request');
 var chalk = require('chalk');
+var async = require('async');
 
 /**
  * Create a Dataset
@@ -77,7 +78,7 @@ exports.delete = function(req, res) {
  * List of Datasets
  */
 exports.list = function(req, res) { 
-	Dataset.find().sort('-created').populate('user', 'displayName').exec(function(err, datasets) {
+	Dataset.find().sort('datum').populate('user', 'displayName').exec(function(err, datasets) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
@@ -112,12 +113,28 @@ exports.readXML = function(req, res) {
 		    if (err) {
 		    	console.log(chalk.yellow('Parse error.'));
 		    } else {
-		    	var dataset = new Dataset(result);
-				dataset.user = req.user;
+		    	/*var dataset = new Dataset(result);
+				dataset.user = req.user;*/
+
+				var datasets = result.arsopodatki.postaja;
 
 				//console.log(result.arsopodatki.postaja);
+				var user2 = req.user;
 
-				Dataset.collection.insert(result.arsopodatki.postaja, onInsert);
+				async.each(datasets, function(file, callback) {
+					file.user = user2.id;
+					console.log(user2.id);
+				}, function(err){
+				    // if any of the file processing produced an error, err would equal that error
+				    if( err ) {
+				      console.log('A file failed to process');
+				    } 
+				    console.log('Finish');
+				    
+				});
+
+				 Dataset.collection.insert(datasets, onInsert);
+
 
 				/*dataset.save(function(err) {
 					if (err) {
@@ -132,6 +149,14 @@ exports.readXML = function(req, res) {
 	});
 };
 
+/**
+ * Get latest set
+ */
+exports.getLatest = function(req, res) {
+	Dataset.find().distinct('reka', function(error, reke) {
+    	console.log(reke);
+	});
+};
 
 /**
  * Dataset middleware
