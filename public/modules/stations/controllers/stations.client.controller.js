@@ -5,46 +5,103 @@ angular.module('stations').controller('StationsController', ['$scope', '$statePa
 	function($scope, $stateParams, $location, Authentication, Stations) {
 		$scope.authentication = Authentication;
 
-		$scope.options = {
-		    chart: {
-		        type: 'discreteBarChart',
-		        height: 450,
-		        margin : {
-		            top: 20,
-		            right: 20,
-		            bottom: 60,
-		            left: 55
-		        },
-		        x: function(d){ return d.label; },
-		        y: function(d){ return d.value; },
-		        showValues: true,
-		        valueFormat: function(d){
-		            return d3.format(',.4f')(d);
-		        },
-		        transitionDuration: 500,
-		        xAxis: {
-		            axisLabel: 'X Axis'
-		        },
-		        yAxis: {
-		            axisLabel: 'Y Axis',
-		            axisLabelDistance: 30
-		        }
-		    }
+		$scope.dataset = {};
+		$scope.dataGain = function(){
+			if (Object.keys($scope.dataset).length > 0) return 0;
+			for (var i in $scope.stations){
+				var resultVodostaj = {
+		    		key: $scope.stations[i].name,
+		    		values: []
+		    	};
+		    	var resultPretok = {
+		    		key: $scope.stations[i].name,
+		    		values: []
+		    	};
+				for (var j in $scope.stations[i].info){
+					resultVodostaj.values.push({label: new Date($scope.stations[i].info[j].datum), value: parseInt($scope.stations[i].info[j].vodostaj)});
+					resultPretok.values.push({label: new Date($scope.stations[i].info[j].datum), value: parseInt($scope.stations[i].info[j].pretok)});
+				}
+				$scope.dataset[$scope.stations[i].name] = [resultVodostaj, resultPretok];
+			}
 		};
 
-		$scope.data = [{
-	    key: "Cumulative Return",
-	    values: [
-	        { "label" : "A" , "value" : -29.765957771107 },
-	        { "label" : "B" , "value" : 0 },
-	        { "label" : "C" , "value" : 32.807804682612 },
-	        { "label" : "D" , "value" : 196.45946739256 },
-	        { "label" : "E" , "value" : 0.19434030906893 },
-	        { "label" : "F" , "value" : -98.079782601442 },
-	        { "label" : "G" , "value" : -13.925743130903 },
-	        { "label" : "H" , "value" : -5.1387322875705 }
-	        ]
-	    }];
+		$scope.options = {
+			chart: {
+                type: 'lineChart',
+                height: 280,
+                width: 540,
+                margin : {
+                    top: 20,
+                    right: 20,
+                    bottom: 60,
+                    left: 70
+                },
+                y: function(d){ return d.value; },
+                x: function(d){return d.label; },
+                useInteractiveGuideline: true,
+                dispatch: {
+                    stateChange: function(e){ console.log("stateChange"); },
+                    changeState: function(e){ console.log("changeState"); },
+                    tooltipShow: function(e){ console.log("tooltipShow"); },
+                    tooltipHide: function(e){ console.log("tooltipHide"); }
+                },
+                xAxis: {
+                    axisLabel: 'Time (ms)',
+                    tickFormat: function(d){
+                       return d3.time.format('%d. %m. %H:%M')(new Date(d));
+                    },
+                	rotateLabels: 45
+                },
+                yAxis: {
+                    axisLabel: 'Water level (cm)',
+                    tickFormat: function(d){
+                        return d3.format('.02f')(d);
+                    },
+                    axisLabelDistance: 30
+                },
+                callback: function(chart){
+                }
+            }
+			/*chart: {
+                type: 'sparklinePlus',
+                height: 150,
+                x: function(d, i){return d.value;},
+                xTickFormat: function(d) {
+                    return d3.time.format(d)(new Date(d)); 
+                },
+                transitionDuration: 250
+            }
+            /*chart: {
+                type: 'discreteBarChart',
+                height: 150,
+                margin : {
+                    top: 20,
+                    right: 20,
+                    bottom: 60,
+                    left: 55
+                },
+                x: function(d){console.log(d.label); return d.label.getHours() +':' + d.label.getMinutes();},
+                y: function(d){return d.value;},
+                showValues: true,
+                valueFormat: function(d){
+                    return d3.format(',.4f')(d);
+                },
+                transitionDuration: 500,
+                xAxis: {
+                    axisLabel: 'X Axis'
+                },
+                yAxis: {
+                    axisLabel: 'Y Axis',
+                    axisLabelDistance: 30
+                }
+            }*/
+		};
+
+	    $scope.getData = function(station){
+	    	$scope.dataGain();
+	    	return $scope.dataset[station.name];
+	    	//return volatileChart(130.0, 0.02);
+	    };
 
 		$scope.center = function(station){
 			var last = station.info.length-1;
@@ -52,7 +109,6 @@ angular.module('stations').controller('StationsController', ['$scope', '$statePa
 	            latitude: station.info[last].ge_sirina,
 	            longitude: station.info[last].ge_dolzina
 	        };
-        	console.log(result);
         	return result;
         };
 	    $scope.zoom =  function() {return 8;};
@@ -118,6 +174,6 @@ angular.module('stations').controller('StationsController', ['$scope', '$statePa
 
 		$scope.drawGraph = function(){
 
-		}
+		};
 	}
 ]);

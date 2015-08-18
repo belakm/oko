@@ -129,23 +129,23 @@ exports.readXML = function(req, res) {
 				var datasets = result.arsopodatki.postaja;
 
 				async.each(datasets, function(file, callback) {
-					Station.findOne({ name: file.merilno_mesto}, function (err, doc){
+					Station.findOne({ name: file.ime_kratko}, function (err, doc){
 						if (err) console.log('iterate err', errorHandler.getErrorMessage(err));
 						if (!doc){ // if there is no station under specified name, add new station to collection
 							file.datum = new Date(file.datum);
 							var station = new Station({
-								name: file.merilno_mesto,
+								name: file.ime_kratko,
 							});
 							var infoArray = new Dataset(file);
 							console.log(chalk.green(infoArray));
 							station.info = [infoArray];
-							station.user = req.user;
+							//station.user = req.user;
 							console.log(station);
 							station.save(function(err) {
 								if (err) {
 									console.log('Saving error. '+errorHandler.getErrorMessage(err));
 								} else {
-									console.log(chalk.blue('Station ' + station.name + ' has been added.'));
+									console.log(chalk.magenta('Station ' + station.name + ' has been added.'));
 								}
 							});
 						} else { // first check if record is up do date, if it isnt, update it

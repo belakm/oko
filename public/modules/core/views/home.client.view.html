@@ -9,28 +9,29 @@
 <section ng-app="myapp" data-ng-controller="StationsController" data-ng-init="find()">
     <div class="page-header">
         <h1>Stations</h1>
-        <div data-ng-controller="myCtrl">
-		    <nvd3 options="options" data="data"></nvd3>
-		    <button ng-click="toggle()">Toggle</button>
-		</div>
     </div>
     <div class="list-group">
         <div data-ng-repeat="station in stations" class="list-group-item col-sm-6">
-			<small class="list-group-item-text">
+			<small class="list-group-item-text station-datum">
 				Posted on
 				<span data-ng-bind="station.created | date:'medium'"></span>
 				by
 				<span data-ng-bind="station.user.displayName"></span>
 			</small>
-			<h4 class="list-group-item-heading" data-ng-bind="station.name"></h4>
+			<h4 class="list-group-item-heading">{{station.info[0].reka}}</h4>
+			<h3 class="list-group-item-heading" data-ng-bind="station.name" data-ng-click="getData(station)"></h3>
 			<div class="row">
 				<div class="col-sm-12">
 					Sets: {{station.info.length}}
 				</div>
-				<div class="col-sm-12" style="height: 150px">
+				<div class="col-sm-12" style="height: 290px">
 					<!--<map center="{{station.info[0].ge_sirina}}, {{station.info[0].ge_dolzina}}" zoom="8">
 						<marker position="{{station.info[0].ge_sirina}}, {{station.info[0].ge_dolzina}}" title="{{station.name}}"></marker>
 					</map>-->
+					<div data-ng-controller="myCtrl">
+					    
+					</div>
+					<nvd3 options="options" data="getData(station)"></nvd3>
 				</div>
 				<div class="col-sm-12">
 					<a class="btn btn-success btn-block" data-ng-href="#!/stations/{{station._id}}">More station specific info</a>
