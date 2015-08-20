@@ -253,12 +253,9 @@ angular.module('stations').controller('StationsController', ['$scope', '$statePa
 				$scope.posexists = ($scope.infoBay.ge_sirina == '') ? false : true;
 				if ($scope.posexists){
 					/* if there isnt a minimal adjustment, ngMap will render streetview on both maps (??) */
-					var x = parseFloat($scope.infoBay.ge_sirina)-0.001;
-					var y = parseFloat($scope.infoBay.ge_dolzina)-0.001;
-					var x2 = parseFloat($scope.infoBay.ge_sirina);
-					var y2 = parseFloat($scope.infoBay.ge_dolzina);
+					var x = parseFloat($scope.infoBay.ge_sirina);
+					var y = parseFloat($scope.infoBay.ge_dolzina);
 					$scope.mapPosition1 = x + ", " + y;
-					$scope.mapPosition2 = x2 + ", " + y2;
 				}
 			} else {
 				$scope.stations = Stations.query({}, '_id', function(err, docs){
@@ -269,12 +266,9 @@ angular.module('stations').controller('StationsController', ['$scope', '$statePa
 					$scope.posexists = ($scope.infoBay.ge_sirina == '') ? false : true;
 					if ($scope.posexists){
 						/* if there isnt a minimal adjustment, ngMap will render streetview on both maps (??) */
-						var x = parseFloat($scope.infoBay.ge_sirina)-0.001;
-						var y = parseFloat($scope.infoBay.ge_dolzina)-0.001;
-						var x2 = parseFloat($scope.infoBay.ge_sirina);
-						var y2 = parseFloat($scope.infoBay.ge_dolzina);
+						var x = parseFloat($scope.infoBay.ge_sirina);
+						var y = parseFloat($scope.infoBay.ge_dolzina);
 						$scope.mapPosition1 = x + ", " + y;
-						$scope.mapPosition2 = x2 + ", " + y2;
 					}
 				});
 			}
@@ -292,12 +286,9 @@ angular.module('stations').controller('StationsController', ['$scope', '$statePa
 				$scope.posexists = ($scope.infoBay.ge_sirina == '') ? false : true;
 				if ($scope.posexists){
 					/* if there isnt a minimal adjustment, ngMap will render streetview on both maps (??) */
-					var x = parseFloat($scope.infoBay.ge_sirina)-0.001;
-					var y = parseFloat($scope.infoBay.ge_dolzina)-0.001;
-					var x2 = parseFloat($scope.infoBay.ge_sirina);
-					var y2 = parseFloat($scope.infoBay.ge_dolzina);
+					var x = parseFloat($scope.infoBay.ge_sirina);
+					var y = parseFloat($scope.infoBay.ge_dolzina);
 					$scope.mapPosition1 = x + ", " + y;
-					$scope.mapPosition2 = x2 + ", " + y2;
 				}
 
 				console.log($scope.posexists);

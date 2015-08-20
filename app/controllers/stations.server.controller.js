@@ -39,6 +39,13 @@ exports.read = function(req, res) {
 	res.jsonp(req.station);
 };
 
+exports.random = function(req, res) {
+	Station.find().sort('name').populate('user', 'displayName').exec(function(err, stations) {
+		var station = stations[Math.floor(Math.random() * stations.length)];
+		res.jsonp(station);
+	});
+};
+
 /**
  * Update a Station
  */

@@ -34,7 +34,7 @@
 				<i class="glyphicon glyphicon-trash"></i>
 			</a>
 		</div>
-		<div class="row">
+		<div class="row" style="margin-bottom: 20px">
 			<div class="col-md-12">
 				<h2>
 					{{station.name}}
@@ -45,7 +45,7 @@
 		<div class="row">
 			<div class="row">
 				<div class="col-md-6">
-					<figure class="col-md-6" ng-hide="{{posexists}}">
+					<figure class="col-md-12" ng-hide="{{posexists}}">
 						<map center="{{mapPosition1}}" zoom="10" style="height: 390px; margin-bottom: 30px;">
 							<marker position="{{mapPosition1}}" title="{{station.name}}"></marker>
 						</map>
@@ -53,29 +53,12 @@
 							Map location of {{station.name}} station.
 						</figcaption>
 					</figure>
-					<figure class="col-md-6" ng-hide="{{posexists}}">
-						<map center="{{mapPosition2}}" zoom="10" style="height: 390px; margin-bottom: 30px;">
-							<street-view-panorama 
-							click-to-go="false" 
-							disable-default-u-i="false" 
-							disable-double-click-zoom="false" 
-							position="{{mapPosition2}}" 
-							pov="{heading:90, pitch: 0}" 
-							scrollwheel="false" 
-							enable-close-button="true" 
-							visible="true">
-							</street-view-panorama>
-						</map>
-						<figcaption class="text-center">
-							Streetview of station's position.
-						</figcaption>
-					</figure>
 					<div class="col-md-12" data-ng-hide="{{!posesists}}" style="height: 390px;">
 						<p style="line-height: 390px; font-size: 20px;"><i class="glyphicon glyphicon-exclamation-sign" style="margin-right:10px;"></i>There is no locational data for this station.</p>
 					</div>
 				</div>
 				<div class="col-md-6">
-					<h2>Latest data</h2>
+					<h2 style="margin-top: 0;">Latest data</h2>
 					<ul class="list-group properties">
 		                <li data-ng-repeat="(key, value) in station.info[station.info.length -1]" class="col-sm-6 list-group-item" data-ng-if="key != '_id'"><span>{{translateKey(key)}}</span>:<br/><strong class="pull-right" data-ng-bind="translateValue(key, value)"></strong></li>
 		            </ul>

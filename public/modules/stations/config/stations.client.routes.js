@@ -17,6 +17,10 @@ angular.module('stations').config(['$stateProvider',
 			url: '/stations/:stationId',
 			templateUrl: 'modules/stations/views/view-station.client.view.html'
 		}).
+		state('viewRandomStation', {
+			url: '/stations/random',
+			templateUrl: 'modules/stations/views/view-station.client.view.html'
+		}).
 		state('editStation', {
 			url: '/stations/:stationId/edit',
 			templateUrl: 'modules/stations/views/edit-station.client.view.html'

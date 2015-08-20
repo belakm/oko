@@ -13,6 +13,11 @@ module.exports = function(app) {
 	app.route('/stations/xml')
 		.get(stations.readXML);
 
+	app.route('/stations/random')
+		.get(stations.random)
+		.put(users.requiresLogin, stations.hasAuthorization, stations.update)
+		.delete(users.requiresLogin, stations.hasAuthorization, stations.delete);
+
 	app.route('/stations/:stationId')
 		.get(stations.read)
 		.put(users.requiresLogin, stations.hasAuthorization, stations.update)
