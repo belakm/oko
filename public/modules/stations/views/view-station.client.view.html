@@ -1,21 +1,70 @@
 <section data-ng-controller="StationsController" data-ng-init="findOne()">
-	<div class="page-header">
-		<h1 data-ng-bind="station.name"></h1>
+	<div class="row">
+		<div class="page-header">
+			<h1>
+				{{station.name}}
+			</h1>
+		</div>
+		<div class="pull-right" data-ng-show="authentication.user">
+			<a class="btn btn-primary" href="/#!/stations/{{station._id}}/edit">
+				<i class="glyphicon glyphicon-edit"></i>
+			</a>
+			<a class="btn btn-primary" data-ng-click="remove();">
+				<i class="glyphicon glyphicon-trash"></i>
+			</a>
+		</div>
+		<div class="row col-sm-12">
+			<p>Datasets: <span data-ng-bind="station.info.length"></span></p>
+			<p>Latest update: <span data-ng-bind="station.info[station.info.length -1].datum"></span></p>
+		</div>
 	</div>
-	<div class="pull-right" data-ng-show="((authentication.user) && (authentication.user._id == station.user._id))">
-		<a class="btn btn-primary" href="/#!/stations/{{station._id}}/edit">
-			<i class="glyphicon glyphicon-edit"></i>
-		</a>
-		<a class="btn btn-primary" data-ng-click="remove();">
-			<i class="glyphicon glyphicon-trash"></i>
-		</a>
+	<div class="row">
+		<div class="row">
+			<div class="col-md-6">
+				<figure class="col-md-6" ng-hide="{{posexists}}">
+					<map center="{{mapPosition2}}" zoom="10" style="height: 390px; margin-bottom: 30px;">
+						<marker position="{{mapPosition2}}" title="{{station.name}}"></marker>
+					</map>
+					<figcaption class="text-center">
+						Map location of {{station.name}} station.
+					</figcaption>
+				</figure>
+				<figure class="col-md-6" ng-hide="{{posexists}}">
+					<map center="{{mapPosition1}}" zoom="10" style="height: 390px; margin-bottom: 30px;">
+						<street-view-panorama 
+						click-to-go="false" 
+						disable-default-u-i="false" 
+						disable-double-click-zoom="false" 
+						position="{{mapPosition1}}" 
+						pov="{heading:90, pitch: 0}" 
+						scrollwheel="false" 
+						enable-close-button="true" 
+						visible="true">
+						</street-view-panorama>
+					</map>
+					<figcaption class="text-center">
+						Streetview of station's position.
+					</figcaption>
+				</figure>
+				<div class="col-md-12" data-ng-hide="{{!posesists}}" style="height: 390px;">
+					<p style="line-height: 390px; font-size: 20px;"><i class="glyphicon glyphicon-exclamation-sign" style="margin-right:10px;"></i>There is no locational data for this station.</p>
+				</div>
+			</div>
+			<figure class="col-md-6">
+				<nvd3 options="getOptions(true)" data="getData(station)" id="{{station._id}}"></nvd3>
+				<figcaption class="text-center">
+					{{infoBay.reka}} water level, flow and temperature.
+				</figcaption>
+			</figure>
+		</div>
+		<div class="col-md-12">
+			<h2>Raw</h2>
+			<div class="well" style="max-height: 450px; overflow-y: scroll;">
+				<div class="well well-sm">
+					<p><strong>objects: {{station.info.length}}</strong></p>
+				</div>
+				<p>{{ station }}</p>
+			</div>
+		</div>
 	</div>
-	<small>
-		<em class="text-muted">
-			Posted on
-			<span data-ng-bind="station.created | date:'mediumDate'"></span>
-			by
-			<span data-ng-bind="station.user.displayName"></span>
-		</em>
-	</small>
 </section>

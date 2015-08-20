@@ -26,13 +26,15 @@ module.exports = {
 				'public/lib/angular-sanitize/angular-sanitize.js', 
 				'public/lib/angular-ui-router/release/angular-ui-router.js',
 				'public/lib/angular-ui-utils/ui-utils.js',
+				'public/module',
 				'public/lib/angular-bootstrap/ui-bootstrap-tpls.js',
 				'//maps.googleapis.com/maps/api/js?sensor=false?v3',
 	            'public/lib/lodash/lodash.min.js',
 	            'public/lib/angular-google-maps/dist/angular-google-maps.js',
 	            'public/lib/d3/d3.js',
 	            'public/lib/nvd3/nv.d3.min.js',
-	            'public/lib/angular-nvd3/dist/angular-nvd3.min.js'
+	            'public/lib/angular-nvd3/dist/angular-nvd3.min.js',
+	            'public/modules/stations/js/ng-map.min.js'
 			]
 		},
 		css: [

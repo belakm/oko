@@ -3,3 +3,16 @@
 	font-size: 12px;
 	margin-bottom: 10px;
 }
+.nvd3 .axis line {
+  stroke: #ccc;
+}
+.nvd3 g.nv-groups path.nv-line {
+  stroke-width: 1.2px;
+}
+.nvd3.nv-stackedarea path.nv-area{
+   opacity: 0.7;
+}
+.nvd3 .nv-legend .nv-series text{
+	font-family: "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
+	font-weight: 300;
+}
