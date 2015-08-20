@@ -2,18 +2,33 @@
     <div class="page-header">
         <h1>Stations</h1>
     </div>
-    <div class="list-group">
-        <a data-ng-repeat="station in stations" data-ng-href="#!/stations/{{station._id}}" class="list-group-item">
-			<small class="list-group-item-text">
-				Posted on
-				<span data-ng-bind="station.created | date:'medium'"></span>
-				by
-				<span data-ng-bind="station.user.displayName"></span>
-			</small>
-			<h4 class="list-group-item-heading" data-ng-bind="station.name"></h4>
-        </a>
+    <div class="row list-group">
+        <div data-ng-repeat="(key, station) in stations" class="list-group-item col-sm-4 stationElement">
+            <h4 class="list-group-item-heading">{{station.info[0].reka}}</h4>
+            <h3 class="list-group-item-heading" data-ng-bind="station.name" data-ng-click="getData(station)"></h3>
+            <div class="row">
+                <div class="col-sm-12">
+                    <h5>Datasets: <span data-ng-bind="station.info.length"></span></h5>
+                    <ul class="list-group properties">
+                        <li data-ng-repeat="(key, value) in station.info[station.info.length -1]" class="col-sm-6 list-group-item" data-ng-if="key != '_id'"><span>{{translateKey(key)}}</span>:<br/><strong class="pull-right" data-ng-bind="translateValue(key, value)"></strong></li>
+                    </ul>
+                    <!--<map center="{{station.info[0].ge_sirina}}, {{station.info[0].ge_dolzina}}" zoom="8"
+>                        <marker position="{{station.info[0].ge_sirina}}, {{station.info[0].ge_dolzina}}" title="{{station.name}}"></marker>
+                    </map><div data-ng-controller="myCtrl">
+                        
+                    </div>
+                    <figure>
+                        <nvd3 options="getOptions(false)" data="getData(station)" id="{{station._id}}"></nvd3>
+                        <figcaption class="text-center">
+                            {{station.info[0].reka}} water level, flow and temperature.
+                        </figcaption>
+                    </figure>-->
+                </div>
+                <a class="btn btn-warning col-sm-10 col-sm-offset-1" style="margin-top: 10px;" href="#!/stations/{{station._id}}">More station specific info</a>
+            </div>
+        </div>
     </div>
     <div class="alert alert-warning text-center" data-ng-hide="!stations.$resolved || stations.length">
-    	No Stations yet, why don't you <a href="/#!/stations/create">create one</a>?
+        No Stations yet, why don't you <a href="/#!/stations/create">create one</a>?
     </div>
 </section>

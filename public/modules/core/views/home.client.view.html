@@ -1,57 +1,105 @@
-<section data-ng-controller="HomeController">
+<section data-ng-controller="HomeController" class="home">
 	<div class="jumbotron">
-	  <div class="container">
-	    <h1>OKO</h1>
-	    <p>...</p>
+	  <div class="container text-center">
+	    <h1><img src="/icons/logo.png" title="OKO" alt="OKO" class="logoimage"> OKO</h1>
+	    <p>Parser for ARSO XML data.</p>
+	    <a class="btn btn-success" href="https://github.com/belakm/oko">Github repo</a>
 	  </div>
 	</div>
 </section>
-<style type="text/css">
-	
-</style>
-<section ng-app="myapp" data-ng-controller="StationsController" data-ng-init="find()">
-    <div class="page-header">
-        <h1>Stations</h1>
+<div class="row">
+	<div class="well">
+    	<h2>Built with:</h2>
+    	<ul class="list-group builtwith">
+  			<li class="list-group-item"><a href="http://meanjs.org/">MEAN.js</a>, Open-Source Full-Stack Solution For MEAN Applications</li>
+  			<li class="list-group-item"><a href="http://krispo.github.io/angular-nvd3/">Angular-nvD3</a>, An AngularJS directive for NVD3 re-usable charting library (based on D3).</li>
+  			<li class="list-group-item"><a href="ngMap.github.io">Angularjs-Google-Maps</a>, a GoogleMap AngularJS Directive.</li>
+    	</ul>
     </div>
-    <div class="list-group">
-        <div data-ng-repeat="station in stations" class="list-group-item col-sm-6">
-			<small class="list-group-item-text station-datum">
-				Posted on
-				<span data-ng-bind="station.created | date:'medium'"></span>
-				by
-				<span data-ng-bind="station.user.displayName"></span>
-			</small>
-			<h4 class="list-group-item-heading">{{station.info[0].reka}}</h4>
-			<h3 class="list-group-item-heading" data-ng-bind="station.name" data-ng-click="getData(station)"></h3>
-			<div class="row">
-				<div class="col-sm-12">
-					<p>Datasets: <span data-ng-bind="station.info.length"></span></p>
-					<p>Latest update: <span data-ng-bind="station.info[station.info.length -1].datum"></span></p>
-				</div>
-				<div class="col-sm-12">
-					<ul class="list-group" data-ng-repeat="(key, value) in station.info[station.info.length -1]">
-						<li class="col-sm-6 list-group-item" data-ng-hide="{{key == '_id'}}"><strong>{{key}}</strong>: <span data-ng-bind="value"></span></li>
-					</ul>
-					<!--<map center="{{station.info[0].ge_sirina}}, {{station.info[0].ge_dolzina}}" zoom="8">
-						<marker position="{{station.info[0].ge_sirina}}, {{station.info[0].ge_dolzina}}" title="{{station.name}}"></marker>
-					</map><div data-ng-controller="myCtrl">
-					    
-					</div>
-					<figure>
-						<nvd3 options="getOptions(false)" data="getData(station)" id="{{station._id}}"></nvd3>
-						<figcaption class="text-center">
-							{{station.info[0].reka}} water level, flow and temperature.
-						</figcaption>
-					</figure>-->
+</div>
 
+<div class="row" data-ng-controller="StationsController" data-ng-init="findR()">
+	<div class="page-header row">
+		<h2>Example
+		<div class="pull-right">
+			<div class="btn btn-warning" data-ng-click="findR()">Get another example</div>
+		</div></h2>
+	</div>
+	<div class="well">
+		<div class="pull-right" data-ng-show="authentication.user">
+			<a class="btn btn-primary" href="/#!/stations/{{station._id}}/edit">
+				<i class="glyphicon glyphicon-edit"></i>
+			</a>
+			<a class="btn btn-primary" data-ng-click="remove();">
+				<i class="glyphicon glyphicon-trash"></i>
+			</a>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<h2>
+					{{station.name}}
+					<small>Datasets: <span data-ng-bind="station.info.length"></span></small>
+				</h2>
+			</div>
+		</div>
+		<div class="row">
+			<div class="row">
+				<div class="col-md-6">
+					<figure class="col-md-6" ng-hide="{{posexists}}">
+						<map center="{{mapPosition1}}" zoom="10" style="height: 390px; margin-bottom: 30px;">
+							<marker position="{{mapPosition1}}" title="{{station.name}}"></marker>
+						</map>
+						<figcaption class="text-center">
+							Map location of {{station.name}} station.
+						</figcaption>
+					</figure>
+					<figure class="col-md-6" ng-hide="{{posexists}}">
+						<map center="{{mapPosition2}}" zoom="10" style="height: 390px; margin-bottom: 30px;">
+							<street-view-panorama 
+							click-to-go="false" 
+							disable-default-u-i="false" 
+							disable-double-click-zoom="false" 
+							position="{{mapPosition2}}" 
+							pov="{heading:90, pitch: 0}" 
+							scrollwheel="false" 
+							enable-close-button="true" 
+							visible="true">
+							</street-view-panorama>
+						</map>
+						<figcaption class="text-center">
+							Streetview of station's position.
+						</figcaption>
+					</figure>
+					<div class="col-md-12" data-ng-hide="{{!posesists}}" style="height: 390px;">
+						<p style="line-height: 390px; font-size: 20px;"><i class="glyphicon glyphicon-exclamation-sign" style="margin-right:10px;"></i>There is no locational data for this station.</p>
+					</div>
 				</div>
-				<div class="col-sm-6 col-sm-offset-3" style="margin-top: 20px;">
-					<a class="btn btn-success btn-block" href="#!/stations/{{station._id}}">More station specific info</a>
+				<div class="col-md-6">
+					<h2>Latest data</h2>
+					<ul class="list-group properties">
+		                <li data-ng-repeat="(key, value) in station.info[station.info.length -1]" class="col-sm-6 list-group-item" data-ng-if="key != '_id'"><span>{{translateKey(key)}}</span>:<br/><strong class="pull-right" data-ng-bind="translateValue(key, value)"></strong></li>
+		            </ul>
+	            </div>
+			</div>
+			<div class="row" style="margin: 40px 0 20px;">
+				<figure class="">
+					<div class="position: relative;">
+						<nvd3 options="getOptions(true)" data="getData(station)"></nvd3>
+					</div>
+					<figcaption class="text-center">
+						{{infoBay.reka}} water level, flow and temperature.
+					</figcaption>
+				</figure>
+			</div>
+			<div class="container">
+				<h2>Raw</h2>
+				<div class="well" style="max-height: 450px; overflow-y: scroll;">
+					<div class="well well-sm">
+						<p><strong>objects: {{station.info.length}}</strong></p>
+					</div>
+					<p>{{ station }}</p>
 				</div>
 			</div>
-        </div>
+		</div>
     </div>
-    <div class="alert alert-warning text-center" data-ng-hide="!stations.$resolved || stations.length">
-    	No Stations yet, why don't you <a href="/#!/stations/create">create one</a>?
-    </div>
-</section>
+</div>

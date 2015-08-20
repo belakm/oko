@@ -22,20 +22,20 @@
 		<div class="row">
 			<div class="col-md-6">
 				<figure class="col-md-6" ng-hide="{{posexists}}">
-					<map center="{{mapPosition2}}" zoom="10" style="height: 390px; margin-bottom: 30px;">
-						<marker position="{{mapPosition2}}" title="{{station.name}}"></marker>
+					<map center="{{mapPosition1}}" zoom="10" style="height: 390px; margin-bottom: 30px;">
+						<marker position="{{mapPosition1}}" title="{{station.name}}"></marker>
 					</map>
 					<figcaption class="text-center">
 						Map location of {{station.name}} station.
 					</figcaption>
 				</figure>
 				<figure class="col-md-6" ng-hide="{{posexists}}">
-					<map center="{{mapPosition1}}" zoom="10" style="height: 390px; margin-bottom: 30px;">
+					<map center="{{mapPosition2}}" zoom="10" style="height: 390px; margin-bottom: 30px;">
 						<street-view-panorama 
 						click-to-go="false" 
 						disable-default-u-i="false" 
 						disable-double-click-zoom="false" 
-						position="{{mapPosition1}}" 
+						position="{{mapPosition2}}" 
 						pov="{heading:90, pitch: 0}" 
 						scrollwheel="false" 
 						enable-close-button="true" 
@@ -50,14 +50,22 @@
 					<p style="line-height: 390px; font-size: 20px;"><i class="glyphicon glyphicon-exclamation-sign" style="margin-right:10px;"></i>There is no locational data for this station.</p>
 				</div>
 			</div>
-			<figure class="col-md-6">
-				<nvd3 options="getOptions(true)" data="getData(station)" id="{{station._id}}"></nvd3>
+			<div class="col-md-6">
+				<h2>Latest data</h2>
+				<ul class="list-group properties">
+	                <li data-ng-repeat="(key, value) in station.info[station.info.length -1]" class="col-sm-6 list-group-item" data-ng-if="key != '_id'"><span>{{translateKey(key)}}</span>:<br/><strong class="pull-right" data-ng-bind="translateValue(key, value)"></strong></li>
+	            </ul>
+            </div>
+		</div>
+		<div class="row" style="margin: 40px 0 20px;">
+			<figure class="">
+				<nvd3 options="getOptions(true)" data="getData(station)"></nvd3>
 				<figcaption class="text-center">
 					{{infoBay.reka}} water level, flow and temperature.
 				</figcaption>
 			</figure>
 		</div>
-		<div class="col-md-12">
+		<div class="row">
 			<h2>Raw</h2>
 			<div class="well" style="max-height: 450px; overflow-y: scroll;">
 				<div class="well well-sm">

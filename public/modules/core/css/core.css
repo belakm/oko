@@ -1,15 +1,30 @@
 .content {
 	margin-top: 50px;
 }
-.undecorated-link:hover {
-	text-decoration: none;
+
+.logoimage{
+	width: 200px;
+	margin-top: -20px;
 }
-[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
-	display: none !important;
+.home h1{
+	font-size: 168px;
+	line-height: 168px;
 }
-.ng-invalid.ng-dirty {
-	border-color: #FA787E;
+.builtwith li{
+	font-weight: 300;
+	font-size: 16px;
 }
-.ng-valid.ng-dirty {
-	border-color: #78FA89;
+.builtwith li a{
+	font-weight: 700; 
+}
+.navbar-brand{
+	width: auto !important;
+}
+.navbar-brand>img{
+	height: 100%;
+	float: left;
+}
+.navbar-brand>span{
+	display: inline;
+	margin-left: 5px;
 }

@@ -5,6 +5,7 @@
  */
 var mongoose = require('mongoose'),
 	Schema = mongoose.Schema;
+var random = require('mongoose-simple-random');
 
 /**
  * Station Schema
@@ -26,5 +27,7 @@ var StationSchema = new Schema({
 	},
 	info: []
 });
+
+StationSchema.plugin(random); 
 
 mongoose.model('Station', StationSchema);

@@ -16,3 +16,9 @@
 	font-family: "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
 	font-weight: 300;
 }
+.stationElement.list-group-item:nth-of-type(3n-2), .properties .list-group-item:nth-of-type(2n-1){
+	clear: left;
+}
+.stationElement.list-group-item:nth-of-type(2n){
+	background: #ebf7f9;
+}
