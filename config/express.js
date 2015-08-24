@@ -15,9 +15,7 @@ var fs = require('fs'),
 	cookieParser = require('cookie-parser'),
 	helmet = require('helmet'),
 	passport = require('passport'),
-	mongoStore = require('connect-mongo')({
-		session: session
-	}),
+  	MongoStore = require('connect-mongo')(session),
 	flash = require('connect-flash'),
 	config = require('./config'),
 	consolidate = require('consolidate'),
@@ -87,14 +85,18 @@ module.exports = function(db) {
 
 	// Express MongoDB session storage
 	app.use(session({
-		saveUninitialized: true,
-		resave: true,
-		secret: config.sessionSecret,
-		store: new mongoStore({
-			db: db.connection.db,
-			collection: config.sessionCollection
-		})
-	}));
+	    saveUninitialized: true,
+	    resave: true,
+	    secret: config.sessionSecret,
+	    cookie: {
+	      maxAge: config.sessionExpiration
+	    },
+	    key: config.sessionKey,
+	    store: new MongoStore({
+	      mongooseConnection: db.connection,
+	      collection: config.sessionCollection
+	    })
+	  }));
 
 	// use passport session
 	app.use(passport.initialize());

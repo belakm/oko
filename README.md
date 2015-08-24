@@ -1,2 +1,1 @@
-# oko
-Parser for XML from a web source.
+Mitja Belak, 2015

@@ -209,7 +209,3 @@ exports.readXML = function(req, res) {
 	  }
 	});
 };
-
-/*
- *  Query new data every tem minutes
- */

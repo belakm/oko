@@ -1,0 +1,13 @@
+---
+declared-services: 
+  mean-mongo: 
+    label: mongolab 
+    plan: sandbox 
+applications:
+- name: oko
+  host: oko-${random-word}
+  memory: 512M
+  services:
+  - mean-mongo
+  env:
+    NODE_ENV: cloud-foundry
