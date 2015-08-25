@@ -124,7 +124,7 @@ angular.module('stations').controller('StationsController', ['$scope', '$statePa
                 useInteractiveGuideline: true,
                 xAxis: {
                     tickFormat: function(d){
-                      return d3.time.format('%H:%M')(new Date(d));
+                      return d3.time.format('%d. %m., %H:%M')(new Date(d));
                     }
                 },
                 yAxis: {
@@ -239,7 +239,8 @@ angular.module('stations').controller('StationsController', ['$scope', '$statePa
 					}
 				case 'datum':
 					var date = new Date(value);
-					return date.getUTCHours() + ':' + date.getUTCMinutes() + ' - ' + date.getUTCDate() + '. ' + date.getUTCDate() + '. ' + date.getUTCFullYear();
+					return ("0" + date.getUTCHours()).slice(-2) + ':' + ("0" + date.getUTCMinutes()).slice(-2) + ' - ' + ("0" + date.getUTCDate()).slice(-2) + '. ' + ("0" + date.getUTCMonth()).slice(-2) + '. ' + date.getUTCFullYear();
+				case undefined:
 				case '': return 'no data';
 				default: return value;			
 			}

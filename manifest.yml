@@ -6,7 +6,7 @@ declared-services:
 applications:
 - name: oko
   host: oko-${random-word}
-  memory: 512M
+  memory: 2048M
   services:
   - mean-mongo
   env:
