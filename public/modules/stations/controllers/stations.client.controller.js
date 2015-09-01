@@ -5,6 +5,8 @@ angular.module('stations').controller('StationsController', ['$scope', '$statePa
 	function($scope, $stateParams, $location, Authentication, Stations) {
 		$scope.authentication = Authentication;
 
+		$scope.isReady = false;
+
 		$scope.dataset = {};
 		$scope.dataGain = function(){
 			console.log('getting data');
@@ -201,7 +203,9 @@ angular.module('stations').controller('StationsController', ['$scope', '$statePa
 
 		// Find a list of Stations
 		$scope.find = function() {
-			$scope.stations = Stations.query();
+			$scope.stations = Stations.query({}, '_id', function(err, stations){
+				$scope.isReady = true;
+			});
 		};
 
 		// Show only required attributes
@@ -246,7 +250,9 @@ angular.module('stations').controller('StationsController', ['$scope', '$statePa
 			}
 		}
 
+		
 		$scope.findR = function(){
+
 			if (typeof $scope.stations !== 'undefined'){
 				$scope.station = $scope.stations[Math.floor(Math.random() * $scope.stations.length)];
 				$scope.zoom = 10;
@@ -258,6 +264,7 @@ angular.module('stations').controller('StationsController', ['$scope', '$statePa
 					var y = parseFloat($scope.infoBay.ge_dolzina);
 					$scope.mapPosition1 = x + ", " + y;
 				}
+				$scope.isReady = true;
 			} else {
 				$scope.stations = Stations.query({}, '_id', function(err, docs){
 					$scope.station = $scope.stations[Math.floor(Math.random() * $scope.stations.length)];
@@ -271,6 +278,7 @@ angular.module('stations').controller('StationsController', ['$scope', '$statePa
 						var y = parseFloat($scope.infoBay.ge_dolzina);
 						$scope.mapPosition1 = x + ", " + y;
 					}
+					$scope.isReady = true;
 				});
 			}
 		};
@@ -291,13 +299,8 @@ angular.module('stations').controller('StationsController', ['$scope', '$statePa
 					var y = parseFloat($scope.infoBay.ge_dolzina);
 					$scope.mapPosition1 = x + ", " + y;
 				}
-
-				console.log($scope.posexists);
+				$scope.isReady = true;
 			});
-		};
-
-		$scope.drawGraph = function(){
-
 		};
 	}
 ]);

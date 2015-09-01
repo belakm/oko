@@ -24,6 +24,7 @@
 		<div class="pull-right">
 			<div class="btn btn-warning" data-ng-click="findR()">Get another example</div>
 		</div></h2>
+		<div data-ng-if="!isReady" class="alert alert-info" role="alert">Loading data <img src="/icons/loader.gif" title="Loading" alt="Loading" class="loader-img"></div>
 	</div>
 	<div class="well">
 		<div class="pull-right" data-ng-show="authentication.user">

@@ -1,6 +1,7 @@
 <section data-ng-controller="StationsController" data-ng-init="find()">
     <div class="page-header">
         <h1>Stations</h1>
+        <div data-ng-if="!isReady" class="alert alert-info" role="alert">Loading data <img src="/icons/loader.gif" title="Loading" alt="Loading" class="loader-img"></div>
     </div>
     <div class="row list-group">
         <div data-ng-repeat="(key, station) in stations" class="list-group-item col-sm-4 stationElement">
