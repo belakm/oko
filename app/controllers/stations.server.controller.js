@@ -40,7 +40,7 @@ exports.read = function(req, res) {
 };
 
 exports.random = function(req, res) {
-	Station.find().sort('name').populate('user', 'displayName').exec(function(err, stations) {
+	Station.find({}, {info: {'$slice': -100}}).sort('name').populate('user', 'displayName').exec(function(err, stations) {
 		var station = stations[Math.floor(Math.random() * stations.length)];
 		res.jsonp(station);
 	});
@@ -86,7 +86,7 @@ exports.delete = function(req, res) {
  * List of Stations
  */
 exports.list = function(req, res) { 
-	Station.find().sort('name').populate('user', 'displayName').exec(function(err, stations) {
+	Station.find({}, {info: {'$slice': -100}}).sort('name').populate('user', 'displayName').exec(function(err, stations) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
@@ -136,7 +136,7 @@ exports.readXML = function(req, res) {
 				var datasets = result.arsopodatki.postaja;
 
 				async.each(datasets, function(file, callback) {
-					Station.findOne({ name: file.ime_kratko}, function (err, doc){
+					Station.findOne({ name: file.ime_kratko}, {info: {'$slice': -100}}, function (err, doc){
 						if (err) console.log('iterate err', errorHandler.getErrorMessage(err));
 						if (!doc){ // if there is no station under specified name, add new station to collection
 							file.datum = new Date(file.datum);
